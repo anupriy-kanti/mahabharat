@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahabharat Characters</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <i class="fas fa-crown"></i>
+                    Mahabharat Characters
+                </h1>
+                <p class="subtitle">Explore the legendary characters from the great Indian epic</p>
+            </div>
+        </header>
+
+        <div class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search characters..." class="search-input">
+                <button id="clearSearch" class="clear-btn" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">All Characters</button>
+                <button class="filter-btn" data-category="pandavas">Pandavas</button>
+                <button class="filter-btn" data-category="kauravas">Kauravas</button>
+                <button class="filter-btn" data-category="gods">Gods & Deities</button>
+                <button class="filter-btn" data-category="sages">Sages & Rishis</button>
+                <button class="filter-btn" data-category="warriors">Warriors</button>
+                <button class="filter-btn" data-category="women">Women</button>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <span class="stat-number" id="totalCharacters">0</span>
+                <span class="stat-label">Total Characters</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-eye"></i>
+                <span class="stat-number" id="visibleCharacters">0</span>
+                <span class="stat-label">Currently Visible</span>
+            </div>
+        </div>
+
+        <div class="characters-grid" id="charactersGrid">
+            <!-- Characters will be dynamically loaded here -->
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fas fa-search"></i>
+            <h3>No characters found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
