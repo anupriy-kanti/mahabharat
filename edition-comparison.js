@@ -4,6 +4,8 @@ class EditionComparisonTool {
         this.selectedEditions = [];
         this.verseData = this.initializeVerseData();
         this.editionInfo = this.initializeEditionInfo();
+        this.searchMode = 'reference';
+        this.keywordSuggestions = [];
         
         this.init();
     }
@@ -183,6 +185,18 @@ class EditionComparisonTool {
         document.getElementById('verseReference').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.loadVerseComparison();
         });
+        
+        // Search mode tabs
+        document.querySelectorAll('.search-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => this.switchSearchMode(e.target.dataset.mode));
+        });
+        
+        // Keyword search
+        document.getElementById('searchKeywords').addEventListener('click', () => this.searchByKeywords());
+        document.getElementById('verseKeywords').addEventListener('input', (e) => this.handleKeywordInput(e));
+        document.getElementById('verseKeywords').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.searchByKeywords();
+        });
     }
 
     toggleEditionSelection(edition) {
@@ -317,6 +331,204 @@ class EditionComparisonTool {
         const agreementLevel = this.selectedEditions.length >= 2 ? 
             'High' : '-';
         document.getElementById('agreementLevel').textContent = agreementLevel;
+    }
+
+    // Switch search mode
+    switchSearchMode(mode) {
+        this.searchMode = mode;
+        
+        // Update tab appearance
+        document.querySelectorAll('.search-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.mode === mode);
+        });
+        
+        // Show/hide appropriate input
+        document.getElementById('referenceMode').style.display = mode === 'reference' ? 'flex' : 'none';
+        document.getElementById('keywordMode').style.display = mode === 'keyword' ? 'flex' : 'none';
+        
+        // Clear suggestions
+        this.hideKeywordSuggestions();
+    }
+
+    // Handle keyword input
+    handleKeywordInput(e) {
+        const query = e.target.value.toLowerCase();
+        if (query.length >= 2) {
+            this.showKeywordSuggestions(query);
+        } else {
+            this.hideKeywordSuggestions();
+        }
+    }
+
+    // Show keyword suggestions
+    showKeywordSuggestions(query) {
+        this.keywordSuggestions = this.generateKeywordSuggestions(query);
+        this.renderKeywordSuggestions();
+    }
+
+    // Generate keyword suggestions
+    generateKeywordSuggestions(query) {
+        const suggestions = [];
+        
+        // Search through all verses for matching keywords
+        Object.keys(this.verseData).forEach(verseId => {
+            const verse = this.verseData[verseId];
+            
+            // Check English translation
+            if (verse.english.toLowerCase().includes(query)) {
+                suggestions.push({
+                    verseId: verseId,
+                    title: `Verse ${verseId}`,
+                    subtitle: verse.english.substring(0, 80) + '...',
+                    matchType: 'English',
+                    parva: this.getParvaName(verse.parva)
+                });
+            }
+            
+            // Check Sanskrit roman
+            if (verse.roman && verse.roman.toLowerCase().includes(query)) {
+                suggestions.push({
+                    verseId: verseId,
+                    title: `Verse ${verseId}`,
+                    subtitle: verse.roman.substring(0, 80) + '...',
+                    matchType: 'Sanskrit',
+                    parva: this.getParvaName(verse.parva)
+                });
+            }
+            
+            // Check Hindi
+            if (verse.hindi && verse.hindi.includes(query)) {
+                suggestions.push({
+                    verseId: verseId,
+                    title: `Verse ${verseId}`,
+                    subtitle: verse.hindi.substring(0, 80) + '...',
+                    matchType: 'Hindi',
+                    parva: this.getParvaName(verse.parva)
+                });
+            }
+            
+            // Check characters
+            if (verse.characters.some(char => char.toLowerCase().includes(query))) {
+                suggestions.push({
+                    verseId: verseId,
+                    title: `Verse ${verseId}`,
+                    subtitle: `Characters: ${verse.characters.join(', ')}`,
+                    matchType: 'Character',
+                    parva: this.getParvaName(verse.parva)
+                });
+            }
+        });
+        
+        // Remove duplicates and limit results
+        const uniqueSuggestions = suggestions.filter((suggestion, index, self) => 
+            index === self.findIndex(s => s.verseId === suggestion.verseId)
+        );
+        
+        return uniqueSuggestions.slice(0, 8);
+    }
+
+    // Render keyword suggestions
+    renderKeywordSuggestions() {
+        const container = document.getElementById('keywordSuggestions');
+        
+        if (this.keywordSuggestions.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+        
+        container.innerHTML = this.keywordSuggestions.map(suggestion => `
+            <div class="keyword-suggestion-item" onclick="app.selectKeywordSuggestion('${suggestion.verseId}')">
+                <div class="keyword-suggestion-title">${suggestion.title}</div>
+                <div class="keyword-suggestion-subtitle">${suggestion.subtitle}</div>
+                <div class="keyword-suggestion-subtitle">${suggestion.matchType} • ${suggestion.parva}</div>
+            </div>
+        `).join('');
+        
+        container.style.display = 'block';
+    }
+
+    // Hide keyword suggestions
+    hideKeywordSuggestions() {
+        document.getElementById('keywordSuggestions').style.display = 'none';
+    }
+
+    // Select keyword suggestion
+    selectKeywordSuggestion(verseId) {
+        document.getElementById('verseKeywords').value = verseId;
+        this.hideKeywordSuggestions();
+        this.loadVerseComparison(verseId);
+    }
+
+    // Search by keywords
+    searchByKeywords() {
+        const query = document.getElementById('verseKeywords').value.trim();
+        if (!query) {
+            alert('Please enter keywords to search');
+            return;
+        }
+        
+        // If it's a verse reference, load directly
+        if (this.verseData[query]) {
+            this.loadVerseComparison(query);
+            return;
+        }
+        
+        // Otherwise search for matching verses
+        const matchingVerses = this.generateKeywordSuggestions(query.toLowerCase());
+        if (matchingVerses.length === 0) {
+            alert('No verses found matching your keywords');
+            return;
+        }
+        
+        if (matchingVerses.length === 1) {
+            this.loadVerseComparison(matchingVerses[0].verseId);
+        } else {
+            // Show multiple results
+            this.showMultipleVerseResults(matchingVerses);
+        }
+    }
+
+    // Show multiple verse results
+    showMultipleVerseResults(verses) {
+        const container = document.getElementById('comparisonResults');
+        container.innerHTML = `
+            <h3>Multiple verses found for your keywords:</h3>
+            <div class="verse-selection-list">
+                ${verses.map(verse => `
+                    <div class="verse-selection-item" onclick="app.loadVerseComparison('${verse.verseId}')">
+                        <div class="verse-selection-title">${verse.title}</div>
+                        <div class="verse-selection-subtitle">${verse.subtitle}</div>
+                        <div class="verse-selection-meta">${verse.matchType} • ${verse.parva}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // Get parva name
+    getParvaName(parva) {
+        const parvaNames = {
+            'adiparva': 'Adi Parva',
+            'sabhaparva': 'Sabha Parva',
+            'vanaparva': 'Vana Parva',
+            'virataparva': 'Virata Parva',
+            'udyogaparva': 'Udyoga Parva',
+            'bheeshma': 'Bheeshma Parva',
+            'drona': 'Drona Parva',
+            'karna': 'Karna Parva',
+            'shalya': 'Shalya Parva',
+            'sauptika': 'Sauptika Parva',
+            'stri': 'Stri Parva',
+            'shanti': 'Shanti Parva',
+            'anushasana': 'Anushasana Parva',
+            'ashvamedhika': 'Ashvamedhika Parva',
+            'ashramavasika': 'Ashramavasika Parva',
+            'mausala': 'Mausala Parva',
+            'mahaprasthanika': 'Mahaprasthanika Parva',
+            'svargarohana': 'Svargarohana Parva',
+            'harivamsha': 'Harivamsha'
+        };
+        return parvaNames[parva] || parva;
     }
 }
 

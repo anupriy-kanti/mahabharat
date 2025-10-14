@@ -147,12 +147,28 @@
                 <div class="comparison-content">
                     <div class="verse-selector">
                         <h3>Select Verse for Comparison</h3>
+                        <div class="verse-search-tabs">
+                            <button class="search-tab active" data-mode="reference">By Reference</button>
+                            <button class="search-tab" data-mode="keyword">By Keywords</button>
+                        </div>
                         <div class="verse-input-group">
-                            <input type="text" id="verseReference" placeholder="Enter verse reference (e.g., 1.1.1)" class="verse-input">
-                            <button class="btn-primary" id="loadVerse">
-                                <i class="fas fa-search"></i>
-                                Load Verse
-                            </button>
+                            <div class="search-mode" id="referenceMode">
+                                <input type="text" id="verseReference" placeholder="Enter verse reference (e.g., 1.1.1)" class="verse-input">
+                                <button class="btn-primary" id="loadVerse">
+                                    <i class="fas fa-search"></i>
+                                    Load Verse
+                                </button>
+                            </div>
+                            <div class="search-mode" id="keywordMode" style="display: none;">
+                                <input type="text" id="verseKeywords" placeholder="Search by keywords (e.g., 'Om', 'Saraswati', 'jaya')" class="verse-input">
+                                <button class="btn-primary" id="searchKeywords">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </button>
+                                <div class="keyword-suggestions" id="keywordSuggestions" style="display: none;">
+                                    <!-- Keyword suggestions will appear here -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
