@@ -179,12 +179,25 @@ class EditionComparisonTool {
         });
 
         // Comparison controls
-        document.getElementById('addEdition').addEventListener('click', () => this.showEditionSelector());
-        document.getElementById('compareEditions').addEventListener('click', () => this.showComparisonInterface());
-        document.getElementById('loadVerse').addEventListener('click', () => this.loadVerseComparison());
-        document.getElementById('verseReference').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.loadVerseComparison();
-        });
+        const addEdition = document.getElementById('addEdition');
+        const compareEditions = document.getElementById('compareEditions');
+        const loadVerse = document.getElementById('loadVerse');
+        const verseReference = document.getElementById('verseReference');
+        
+        if (addEdition) {
+            addEdition.addEventListener('click', () => this.showEditionSelector());
+        }
+        if (compareEditions) {
+            compareEditions.addEventListener('click', () => this.showComparisonInterface());
+        }
+        if (loadVerse) {
+            loadVerse.addEventListener('click', () => this.loadVerseComparison());
+        }
+        if (verseReference) {
+            verseReference.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') this.loadVerseComparison();
+            });
+        }
         
         // Search mode tabs
         document.querySelectorAll('.search-tab').forEach(tab => {
@@ -192,11 +205,18 @@ class EditionComparisonTool {
         });
         
         // Keyword search
-        document.getElementById('searchKeywords').addEventListener('click', () => this.searchByKeywords());
-        document.getElementById('verseKeywords').addEventListener('input', (e) => this.handleKeywordInput(e));
-        document.getElementById('verseKeywords').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.searchByKeywords();
-        });
+        const searchKeywords = document.getElementById('searchKeywords');
+        const verseKeywords = document.getElementById('verseKeywords');
+        
+        if (searchKeywords) {
+            searchKeywords.addEventListener('click', () => this.searchByKeywords());
+        }
+        if (verseKeywords) {
+            verseKeywords.addEventListener('input', (e) => this.handleKeywordInput(e));
+            verseKeywords.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') this.searchByKeywords();
+            });
+        }
     }
 
     toggleEditionSelection(edition) {
@@ -465,6 +485,7 @@ class EditionComparisonTool {
     // Search by keywords
     searchByKeywords() {
         const query = document.getElementById('verseKeywords').value.trim();
+        
         if (!query) {
             alert('Please enter keywords to search');
             return;
@@ -478,6 +499,7 @@ class EditionComparisonTool {
         
         // Otherwise search for matching verses
         const matchingVerses = this.generateKeywordSuggestions(query.toLowerCase());
+        
         if (matchingVerses.length === 0) {
             alert('No verses found matching your keywords');
             return;
