@@ -275,6 +275,118 @@ body {
     color: var(--text);
 }
 
+/* Search Dropdown */
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    margin-top: var(--space-xs);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.dropdown-content {
+    padding: var(--space-sm);
+}
+
+.dropdown-section {
+    margin-bottom: var(--space-sm);
+}
+
+.dropdown-section:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-xs);
+    padding: 0 var(--space-sm);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.875rem;
+}
+
+.dropdown-item:hover {
+    background: var(--surface-hover);
+}
+
+.dropdown-item.active {
+    background: var(--accent);
+    color: white;
+}
+
+.dropdown-item-icon {
+    width: 1rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.dropdown-item.active .dropdown-item-icon {
+    color: white;
+}
+
+.dropdown-item-content {
+    flex: 1;
+}
+
+.dropdown-item-title {
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.dropdown-item.active .dropdown-item-title {
+    color: white;
+}
+
+.dropdown-item-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.dropdown-item.active .dropdown-item-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dropdown-item-type {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.dropdown-item.active .dropdown-item-type {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.dropdown-no-results {
+    padding: var(--space-lg);
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+}
+
 .search-options {
     display: flex;
     justify-content: space-between;

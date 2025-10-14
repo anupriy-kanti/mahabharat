@@ -10,6 +10,9 @@ class CriticallyMahabharat {
         this.episodes = this.initializeEpisodes();
         this.themes = this.initializeThemes();
         this.harivamshaData = this.initializeHarivamshaData();
+        this.suggestions = [];
+        this.selectedSuggestionIndex = -1;
+        this.isDropdownOpen = false;
         
         this.init();
     }
@@ -430,6 +433,9 @@ class CriticallyMahabharat {
     setupEventListeners() {
         // Search functionality
         document.getElementById('searchInput').addEventListener('input', (e) => this.handleSearch(e));
+        document.getElementById('searchInput').addEventListener('keydown', (e) => this.handleSearchKeydown(e));
+        document.getElementById('searchInput').addEventListener('focus', () => this.handleSearchFocus());
+        document.getElementById('searchInput').addEventListener('blur', () => this.handleSearchBlur());
         document.getElementById('clearSearch').addEventListener('click', () => this.clearSearch());
         
         // Search type selection
@@ -472,6 +478,12 @@ class CriticallyMahabharat {
         const clearBtn = document.getElementById('clearSearch');
         
         clearBtn.style.display = query ? 'block' : 'none';
+        
+        if (query.length >= 1) {
+            this.showSuggestions(query);
+        } else {
+            this.hideDropdown();
+        }
         
         if (query.length >= 2) {
             this.performSearch(query);
@@ -869,7 +881,50 @@ class CriticallyMahabharat {
     handleNavigation(e) {
         e.preventDefault();
         const section = e.target.dataset.section;
-        console.log('Navigating to:', section);
+        
+        switch(section) {
+            case 'characters':
+                this.showCharacterSection();
+                break;
+            case 'episodes':
+                this.showEpisodeSection();
+                break;
+            case 'themes':
+                this.showThemeSection();
+                break;
+            case 'family-trees':
+                window.location.href = 'family-trees.html';
+                break;
+            case 'edition-comparison':
+                window.location.href = 'edition-comparison.html';
+                break;
+            default:
+                console.log('Navigating to:', section);
+        }
+    }
+
+    // Show character section
+    showCharacterSection() {
+        this.currentSearchType = 'character';
+        document.querySelector('input[value="character"]').checked = true;
+        document.getElementById('searchInput').placeholder = 'Search characters...';
+        document.getElementById('searchInput').focus();
+    }
+
+    // Show episode section
+    showEpisodeSection() {
+        this.currentSearchType = 'episode';
+        document.querySelector('input[value="episode"]').checked = true;
+        document.getElementById('searchInput').placeholder = 'Search episodes...';
+        document.getElementById('searchInput').focus();
+    }
+
+    // Show theme section
+    showThemeSection() {
+        this.currentSearchType = 'theme';
+        document.querySelector('input[value="theme"]').checked = true;
+        document.getElementById('searchInput').placeholder = 'Search themes...';
+        document.getElementById('searchInput').focus();
     }
 
     // Show help
@@ -886,7 +941,307 @@ class CriticallyMahabharat {
     clearSearch() {
         document.getElementById('searchInput').value = '';
         document.getElementById('clearSearch').style.display = 'none';
+        this.hideDropdown();
         this.clearResults();
+    }
+
+    // Show suggestions dropdown
+    showSuggestions(query) {
+        this.suggestions = this.generateSuggestions(query);
+        this.selectedSuggestionIndex = -1;
+        this.isDropdownOpen = true;
+        this.renderSuggestions();
+    }
+
+    // Generate suggestions based on query
+    generateSuggestions(query) {
+        const suggestions = [];
+        
+        // Character suggestions
+        const characterSuggestions = this.characters
+            .filter(char => 
+                char.name.toLowerCase().includes(query) ||
+                char.variations.some(variation => variation.toLowerCase().includes(query))
+            )
+            .slice(0, 5)
+            .map(char => ({
+                type: 'character',
+                title: char.name,
+                subtitle: char.variations.slice(0, 3).join(', '),
+                description: char.description,
+                icon: 'fas fa-user',
+                data: char
+            }));
+
+        // Episode suggestions
+        const episodeSuggestions = this.episodes
+            .filter(episode => 
+                episode.name.toLowerCase().includes(query) ||
+                episode.description.toLowerCase().includes(query)
+            )
+            .slice(0, 3)
+            .map(episode => ({
+                type: 'episode',
+                title: episode.name,
+                subtitle: episode.description,
+                description: `Parva: ${this.getParvaName(episode.parva)}`,
+                icon: 'fas fa-book-open',
+                data: episode
+            }));
+
+        // Theme suggestions
+        const themeSuggestions = this.themes
+            .filter(theme => 
+                theme.name.toLowerCase().includes(query) ||
+                theme.description.toLowerCase().includes(query)
+            )
+            .slice(0, 3)
+            .map(theme => ({
+                type: 'theme',
+                title: theme.name,
+                subtitle: theme.description,
+                description: `Characters: ${theme.characters.slice(0, 3).join(', ')}`,
+                icon: 'fas fa-lightbulb',
+                data: theme
+            }));
+
+        // Verse suggestions (based on characters and themes)
+        const verseSuggestions = this.verseData
+            .filter(verse => 
+                verse.english.toLowerCase().includes(query) ||
+                verse.characters.some(char => 
+                    this.characters.find(c => c.name === char)?.variations.some(v => v.toLowerCase().includes(query))
+                )
+            )
+            .slice(0, 3)
+            .map(verse => ({
+                type: 'verse',
+                title: `Verse ${verse.id}`,
+                subtitle: verse.english.substring(0, 80) + '...',
+                description: `Parva: ${this.getParvaName(verse.parva)}`,
+                icon: 'fas fa-quote-left',
+                data: verse
+            }));
+
+        // Recent searches
+        const recentSuggestions = this.recentSearches
+            .filter(search => search.toLowerCase().includes(query))
+            .slice(0, 2)
+            .map(search => ({
+                type: 'recent',
+                title: search,
+                subtitle: 'Recent search',
+                description: 'Click to search again',
+                icon: 'fas fa-history',
+                data: { query: search }
+            }));
+
+        // Combine and limit suggestions
+        suggestions.push(...characterSuggestions);
+        suggestions.push(...episodeSuggestions);
+        suggestions.push(...themeSuggestions);
+        suggestions.push(...verseSuggestions);
+        suggestions.push(...recentSuggestions);
+
+        return suggestions.slice(0, 10);
+    }
+
+    // Render suggestions dropdown
+    renderSuggestions() {
+        const dropdown = document.getElementById('searchDropdown');
+        const content = document.getElementById('dropdownContent');
+        
+        if (this.suggestions.length === 0) {
+            content.innerHTML = '<div class="dropdown-no-results">No suggestions found</div>';
+        } else {
+            const groupedSuggestions = this.groupSuggestionsByType(this.suggestions);
+            content.innerHTML = this.renderGroupedSuggestions(groupedSuggestions);
+        }
+        
+        dropdown.style.display = 'block';
+        
+        // Add click listeners to dropdown items
+        setTimeout(() => {
+            document.querySelectorAll('.dropdown-item').forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    const suggestion = this.suggestions[index];
+                    this.handleSuggestionClick(suggestion);
+                });
+            });
+        }, 0);
+    }
+
+    // Group suggestions by type
+    groupSuggestionsByType(suggestions) {
+        const groups = {};
+        suggestions.forEach(suggestion => {
+            if (!groups[suggestion.type]) {
+                groups[suggestion.type] = [];
+            }
+            groups[suggestion.type].push(suggestion);
+        });
+        return groups;
+    }
+
+    // Render grouped suggestions
+    renderGroupedSuggestions(groupedSuggestions) {
+        const typeLabels = {
+            character: 'Characters',
+            episode: 'Episodes',
+            theme: 'Themes',
+            verse: 'Verses',
+            recent: 'Recent Searches'
+        };
+
+        const typeIcons = {
+            character: 'fas fa-users',
+            episode: 'fas fa-book-open',
+            theme: 'fas fa-lightbulb',
+            verse: 'fas fa-quote-left',
+            recent: 'fas fa-history'
+        };
+
+        let html = '';
+        Object.keys(groupedSuggestions).forEach(type => {
+            html += `
+                <div class="dropdown-section">
+                    <div class="dropdown-section-title">
+                        <i class="${typeIcons[type]}"></i>
+                        ${typeLabels[type]}
+                    </div>
+                    ${groupedSuggestions[type].map((suggestion, index) => `
+                        <div class="dropdown-item" data-index="${index}" data-type="${type}">
+                            <div class="dropdown-item-icon">
+                                <i class="${suggestion.icon}"></i>
+                            </div>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">${suggestion.title}</div>
+                                <div class="dropdown-item-subtitle">${suggestion.subtitle}</div>
+                            </div>
+                            <div class="dropdown-item-type">${type}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        });
+
+        return html;
+    }
+
+    // Hide dropdown
+    hideDropdown() {
+        const dropdown = document.getElementById('searchDropdown');
+        dropdown.style.display = 'none';
+        this.isDropdownOpen = false;
+        this.selectedSuggestionIndex = -1;
+    }
+
+    // Handle search focus
+    handleSearchFocus() {
+        const query = document.getElementById('searchInput').value;
+        if (query.length >= 1) {
+            this.showSuggestions(query);
+        }
+    }
+
+    // Handle search blur
+    handleSearchBlur() {
+        // Delay hiding to allow clicking on suggestions
+        setTimeout(() => {
+            this.hideDropdown();
+        }, 200);
+    }
+
+    // Handle search keyboard navigation
+    handleSearchKeydown(e) {
+        if (!this.isDropdownOpen || this.suggestions.length === 0) {
+            if (e.key === 'Enter') {
+                this.performSearch(e.target.value);
+            }
+            return;
+        }
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                this.navigateSuggestions(1);
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                this.navigateSuggestions(-1);
+                break;
+            case 'Enter':
+                e.preventDefault();
+                this.selectSuggestion();
+                break;
+            case 'Escape':
+                e.preventDefault();
+                this.hideDropdown();
+                break;
+        }
+    }
+
+    // Navigate suggestions with arrow keys
+    navigateSuggestions(direction) {
+        const maxIndex = this.suggestions.length - 1;
+        this.selectedSuggestionIndex += direction;
+        
+        if (this.selectedSuggestionIndex < 0) {
+            this.selectedSuggestionIndex = maxIndex;
+        } else if (this.selectedSuggestionIndex > maxIndex) {
+            this.selectedSuggestionIndex = 0;
+        }
+        
+        this.updateSuggestionSelection();
+    }
+
+    // Update suggestion selection visual
+    updateSuggestionSelection() {
+        const items = document.querySelectorAll('.dropdown-item');
+        items.forEach((item, index) => {
+            item.classList.toggle('active', index === this.selectedSuggestionIndex);
+        });
+    }
+
+    // Select current suggestion
+    selectSuggestion() {
+        if (this.selectedSuggestionIndex >= 0 && this.selectedSuggestionIndex < this.suggestions.length) {
+            const suggestion = this.suggestions[this.selectedSuggestionIndex];
+            this.handleSuggestionClick(suggestion);
+        }
+    }
+
+    // Handle suggestion click
+    handleSuggestionClick(suggestion) {
+        const searchInput = document.getElementById('searchInput');
+        
+        switch (suggestion.type) {
+            case 'character':
+                searchInput.value = suggestion.data.name;
+                this.currentSearchType = 'character';
+                document.querySelector('input[value="character"]').checked = true;
+                break;
+            case 'episode':
+                searchInput.value = suggestion.data.name;
+                this.currentSearchType = 'episode';
+                document.querySelector('input[value="episode"]').checked = true;
+                break;
+            case 'theme':
+                searchInput.value = suggestion.data.name;
+                this.currentSearchType = 'theme';
+                document.querySelector('input[value="theme"]').checked = true;
+                break;
+            case 'verse':
+                this.showVerseModal(suggestion.data.id);
+                this.hideDropdown();
+                return;
+            case 'recent':
+                searchInput.value = suggestion.data.query;
+                break;
+        }
+        
+        this.hideDropdown();
+        this.performSearch(searchInput.value);
     }
 
     // Clear results

@@ -38,10 +38,15 @@
                 <div class="search-container">
                     <div class="search-input-group">
                         <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="searchInput" placeholder="Search verses, characters, episodes, or themes..." class="search-input">
+                        <input type="text" id="searchInput" placeholder="Search verses, characters, episodes, or themes..." class="search-input" autocomplete="off">
                         <button id="clearSearch" class="clear-btn" style="display: none;">
                             <i class="fas fa-times"></i>
                         </button>
+                        <div class="search-dropdown" id="searchDropdown" style="display: none;">
+                            <div class="dropdown-content" id="dropdownContent">
+                                <!-- Auto-complete suggestions will be loaded here -->
+                            </div>
+                        </div>
                     </div>
                     <div class="search-options">
                         <div class="search-type-selector">
