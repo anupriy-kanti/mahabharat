@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critically Māhābhārat - Edition Comparison</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="edition-comparison.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <i class="fas fa-balance-scale"></i>
+                    <h1>Critically Māhābhārat</h1>
+                    <span class="edition-badge">Edition Comparison</span>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary" onclick="window.location.href='index.html'">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Search
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Edition Selector -->
+            <section class="edition-selector">
+                <div class="selector-container">
+                    <h2>Select Editions to Compare</h2>
+                    <div class="edition-options">
+                        <div class="edition-group">
+                            <h3>Primary Editions</h3>
+                            <div class="edition-cards">
+                                <div class="edition-card" data-edition="bori">
+                                    <div class="edition-header">
+                                        <h4>BORI Critical Edition</h4>
+                                        <span class="edition-status primary">Primary</span>
+                                    </div>
+                                    <p>Bhandarkar Oriental Research Institute's authoritative critical edition</p>
+                                    <div class="edition-meta">
+                                        <span><i class="fas fa-calendar"></i> 1966-1972</span>
+                                        <span><i class="fas fa-language"></i> Sanskrit</span>
+                                        <span><i class="fas fa-book"></i> 19 Parvas</span>
+                                    </div>
+                                </div>
+                                <div class="edition-card" data-edition="vulgate">
+                                    <div class="edition-header">
+                                        <h4>Vulgate Edition</h4>
+                                        <span class="edition-status reference">Reference</span>
+                                    </div>
+                                    <p>Traditional recension widely used in North India</p>
+                                    <div class="edition-meta">
+                                        <span><i class="fas fa-calendar"></i> 19th Century</span>
+                                        <span><i class="fas fa-language"></i> Sanskrit</span>
+                                        <span><i class="fas fa-book"></i> 18 Parvas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="edition-group">
+                            <h3>Regional Recensions</h3>
+                            <div class="edition-cards">
+                                <div class="edition-card" data-edition="bengali">
+                                    <div class="edition-header">
+                                        <h4>Bengali Edition</h4>
+                                        <span class="edition-status regional">Regional</span>
+                                    </div>
+                                    <p>Eastern recension with unique textual variants</p>
+                                    <div class="edition-meta">
+                                        <span><i class="fas fa-calendar"></i> 19th Century</span>
+                                        <span><i class="fas fa-language"></i> Sanskrit</span>
+                                        <span><i class="fas fa-book"></i> 18 Parvas</span>
+                                    </div>
+                                </div>
+                                <div class="edition-card" data-edition="southern">
+                                    <div class="edition-header">
+                                        <h4>Southern Recension</h4>
+                                        <span class="edition-status regional">Regional</span>
+                                    </div>
+                                    <p>Southern Indian textual tradition</p>
+                                    <div class="edition-meta">
+                                        <span><i class="fas fa-calendar"></i> 19th Century</span>
+                                        <span><i class="fas fa-language"></i> Sanskrit</span>
+                                        <span><i class="fas fa-book"></i> 18 Parvas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="edition-group">
+                            <h3>Translations</h3>
+                            <div class="edition-cards">
+                                <div class="edition-card" data-edition="ganguli">
+                                    <div class="edition-header">
+                                        <h4>Ganguli Translation</h4>
+                                        <span class="edition-status translation">Translation</span>
+                                    </div>
+                                    <p>Kisari Mohan Ganguli's comprehensive English translation</p>
+                                    <div class="edition-meta">
+                                        <span><i class="fas fa-calendar"></i> 1883-1896</span>
+                                        <span><i class="fas fa-language"></i> English</span>
+                                        <span><i class="fas fa-book"></i> 12 Volumes</span>
+                                    </div>
+                                </div>
+                                <div class="edition-card" data-edition="van-buitenen">
+                                    <div class="edition-header">
+                                        <h4>Van Buitenen Translation</h4>
+                                        <span class="edition-status translation">Translation</span>
+                                    </div>
+                                    <p>J.A.B. van Buitenen's scholarly translation (incomplete)</p>
+                                    <div class="edition-meta">
+                                        <span><i class="fas fa-calendar"></i> 1973-1978</span>
+                                        <span><i class="fas fa-language"></i> English</span>
+                                        <span><i class="fas fa-book"></i> 5 Parvas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Interface -->
+            <section class="comparison-interface" id="comparisonInterface" style="display: none;">
+                <div class="comparison-header">
+                    <h2>Edition Comparison</h2>
+                    <div class="comparison-controls">
+                        <button class="btn-secondary" id="addEdition">
+                            <i class="fas fa-plus"></i>
+                            Add Edition
+                        </button>
+                        <button class="btn-primary" id="compareEditions">
+                            <i class="fas fa-balance-scale"></i>
+                            Compare
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="comparison-content">
+                    <div class="verse-selector">
+                        <h3>Select Verse for Comparison</h3>
+                        <div class="verse-search-tabs">
+                            <button class="search-tab active" data-mode="reference">By Reference</button>
+                            <button class="search-tab" data-mode="keyword">By Keywords</button>
+                        </div>
+                        <div class="verse-input-group">
+                            <div class="search-mode" id="referenceMode">
+                                <input type="text" id="verseReference" placeholder="Enter verse reference (e.g., 1.1.1)" class="verse-input">
+                                <button class="btn-primary" id="loadVerse">
+                                    <i class="fas fa-search"></i>
+                                    Load Verse
+                                </button>
+                            </div>
+                            <div class="search-mode" id="keywordMode" style="display: none;">
+                                <input type="text" id="verseKeywords" placeholder="Search by keywords (e.g., 'Om', 'Saraswati', 'jaya')" class="verse-input">
+                                <button class="btn-primary" id="searchKeywords">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </button>
+                                <div class="keyword-suggestions" id="keywordSuggestions" style="display: none;">
+                                    <!-- Keyword suggestions will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-results" id="comparisonResults">
+                        <!-- Comparison results will be displayed here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <h3>Selected Editions</h3>
+                    <div class="selected-editions" id="selectedEditions">
+                        <p class="no-selection">No editions selected</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Comparison Statistics</h3>
+                    <div class="comparison-stats" id="comparisonStats">
+                        <div class="stat-item">
+                            <span class="stat-label">Selected Editions:</span>
+                            <span class="stat-value" id="selectedCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Variants:</span>
+                            <span class="stat-value" id="variantCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Agreement Level:</span>
+                            <span class="stat-value" id="agreementLevel">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Scholarly Notes</h3>
+                    <div class="scholarly-notes">
+                        <p><strong>BORI Critical Edition:</strong> Considered the most authoritative scholarly version, based on collation of multiple manuscripts.</p>
+                        <p><strong>Vulgate Edition:</strong> Traditional recension, includes many interpolations not found in BORI.</p>
+                        <p><strong>Regional Recensions:</strong> Show significant variations reflecting local traditions and interpretations.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="edition-comparison.js"></script>
+</body>
+</html>
