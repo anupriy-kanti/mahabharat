@@ -1,15 +1,16 @@
-# Mahabharat Scholar - Critical Edition Reference
+# Critically Māhābhārat - Critical Edition Reference
 
-A comprehensive web application for scholarly study of the Mahabharata epic, based on the BORI Critical Edition with support for multiple languages, editions, and advanced research tools.
+A comprehensive web application for scholarly study of the Mahabharata epic and Harivamsha, based on the BORI Critical Edition with support for multiple languages, editions, character variations, and advanced research tools.
 
 ## Features
 
 ### 🔍 Advanced Search Capabilities
 - **Verse Search**: Search through thousands of verses using keywords, phrases, or concepts
-- **Character Search**: Find all verses related to specific characters
+- **Character Search**: Find all verses related to specific characters with comprehensive name variations
 - **Episode Search**: Explore verses by major episodes and events
 - **Theme Search**: Discover verses by thematic content (dharma, karma, war, etc.)
 - **Advanced Filtering**: Filter by parva, character, verse range, and edition
+- **Character Variations**: Search for characters using any spelling variation (Bheem/Bhima, Krishn/Krishna, etc.)
 
 ### 🌐 Multi-Language Support
 - **English**: Modern scholarly translations
@@ -19,6 +20,7 @@ A comprehensive web application for scholarly study of the Mahabharata epic, bas
 
 ### 📚 Scholarly Features
 - **BORI Critical Edition**: Primary source based on the most authoritative scholarly version
+- **Harivamsha Support**: Includes the Critical Edition of Harivamsha
 - **Multiple Editions**: Compare BORI, Vulgate, Bengali, Southern recensions
 - **Credible Sources**: All content fact-checked against peer-reviewed scholarship
 - **Citation System**: Proper scholarly citations and references
@@ -29,6 +31,8 @@ A comprehensive web application for scholarly study of the Mahabharata epic, bas
 - **Character Profiles**: Detailed information about each character
 - **Relationship Mapping**: Understand complex family connections
 - **Character Categories**: Pandavas, Kauravas, Gods, Sages, Warriors, Women
+- **Name Variations**: Comprehensive support for all character name variations and spellings
+- **Diacritics Support**: Search with or without diacritical marks
 
 ### 📖 Episode & Theme Organization
 - **Episode Categorization**: Organized by major events and parvas

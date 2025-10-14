@@ -1,5 +1,5 @@
-// Mahabharat Scholar App - Main JavaScript
-class MahabharatScholar {
+// Critically Māhābhārat - Main JavaScript with Character Variations
+class CriticallyMahabharat {
     constructor() {
         this.currentLanguage = 'english';
         this.currentSearchType = 'verse';
@@ -9,6 +9,7 @@ class MahabharatScholar {
         this.characters = this.initializeCharacters();
         this.episodes = this.initializeEpisodes();
         this.themes = this.initializeThemes();
+        this.harivamshaData = this.initializeHarivamshaData();
         
         this.init();
     }
@@ -20,7 +21,298 @@ class MahabharatScholar {
         this.displayWelcomeMessage();
     }
 
-    // Initialize comprehensive verse data (sample from BORI Critical Edition)
+    // Initialize comprehensive character data with all variations
+    initializeCharacters() {
+        return [
+            // Pandavas
+            {
+                name: 'Yudhishthira',
+                variations: ['Yudhiṣṭhira', 'Yudhiṣṭhira', 'Yudhisthira', 'Yudhishthir', 'Dharmaraja', 'Dharmarāja', 'Ajatashatru', 'Ajātaśatru', 'Panduputra', 'Pāṇḍuputra'],
+                category: 'pandavas',
+                description: 'The eldest Pandava, known for his righteousness and truthfulness',
+                relationships: {
+                    father: 'Pandu',
+                    mother: 'Kunti',
+                    brothers: ['Bhima', 'Arjuna', 'Nakula', 'Sahadeva'],
+                    wife: 'Draupadi'
+                },
+                keyVerses: ['1.1.1', '2.1.1'],
+                themes: ['dharma', 'righteousness', 'truth']
+            },
+            {
+                name: 'Bhima',
+                variations: ['Bhīma', 'Bhīm', 'Bheem', 'Bhimā', 'Vrikodara', 'Vṛkodara', 'Panduputra', 'Pāṇḍuputra', 'Vayuputra', 'Vāyuputra'],
+                category: 'pandavas',
+                description: 'The second Pandava, known for his immense strength and appetite',
+                relationships: {
+                    father: 'Pandu',
+                    mother: 'Kunti',
+                    brothers: ['Yudhishthira', 'Arjuna', 'Nakula', 'Sahadeva'],
+                    wife: 'Draupadi'
+                },
+                keyVerses: ['1.1.1', '2.1.1'],
+                themes: ['strength', 'warrior', 'wrestling']
+            },
+            {
+                name: 'Arjuna',
+                variations: ['Arjuna', 'Arjun', 'Partha', 'Pārtha', 'Kiriti', 'Kīriti', 'Gudakesha', 'Gudākeśa', 'Dhananjaya', 'Dhananjaya', 'Kapi', 'Kapi', 'Panduputra', 'Pāṇḍuputra'],
+                category: 'pandavas',
+                description: 'The third Pandava, greatest archer and hero of the Bhagavad Gita',
+                relationships: {
+                    father: 'Pandu',
+                    mother: 'Kunti',
+                    brothers: ['Yudhishthira', 'Bhima', 'Nakula', 'Sahadeva'],
+                    wife: 'Draupadi',
+                    son: 'Abhimanyu'
+                },
+                keyVerses: ['6.23.1', '6.23.2'],
+                themes: ['archery', 'devotion', 'war']
+            },
+            {
+                name: 'Nakula',
+                variations: ['Nakula', 'Nakul', 'Panduputra', 'Pāṇḍuputra', 'Ashwiniputra', 'Aśvinīputra'],
+                category: 'pandavas',
+                description: 'The fourth Pandava, known for his beauty and expertise in swordsmanship',
+                relationships: {
+                    father: 'Pandu',
+                    mother: 'Madri',
+                    brothers: ['Yudhishthira', 'Bhima', 'Arjuna', 'Sahadeva'],
+                    wife: 'Draupadi'
+                },
+                keyVerses: ['1.1.1', '2.1.1'],
+                themes: ['beauty', 'swordsmanship', 'horses']
+            },
+            {
+                name: 'Sahadeva',
+                variations: ['Sahadeva', 'Sahadev', 'Panduputra', 'Pāṇḍuputra', 'Ashwiniputra', 'Aśvinīputra'],
+                category: 'pandavas',
+                description: 'The youngest Pandava, known for his wisdom and knowledge of astrology',
+                relationships: {
+                    father: 'Pandu',
+                    mother: 'Madri',
+                    brothers: ['Yudhishthira', 'Bhima', 'Arjuna', 'Nakula'],
+                    wife: 'Draupadi'
+                },
+                keyVerses: ['1.1.1', '2.1.1'],
+                themes: ['wisdom', 'astrology', 'swordsmanship']
+            },
+            {
+                name: 'Draupadi',
+                variations: ['Draupadi', 'Draupadī', 'Panchali', 'Pāñcālī', 'Krishnaa', 'Kṛṣṇā', 'Yajnaseni', 'Yajñasenī', 'Pandavaputri', 'Pāṇḍavaputrī'],
+                category: 'women',
+                description: 'The common wife of all five Pandavas, known for her beauty and intelligence',
+                relationships: {
+                    father: 'Drupada',
+                    mother: 'Prishthe',
+                    husbands: ['Yudhishthira', 'Bhima', 'Arjuna', 'Nakula', 'Sahadeva']
+                },
+                keyVerses: ['1.189.1', '2.1.1'],
+                themes: ['beauty', 'intelligence', 'fire']
+            },
+            {
+                name: 'Krishna',
+                variations: ['Krishna', 'Kṛṣṇa', 'Krishn', 'Kṛṣṇ', 'Krishnā', 'Kṛṣṇā', 'Krsna', 'Kṛṣṇa', 'Vasudeva', 'Vāsudeva', 'Govinda', 'Gopala', 'Gopāla', 'Madhava', 'Mādhava', 'Hari', 'Hari', 'Narayana', 'Nārāyaṇa'],
+                category: 'gods',
+                description: 'The eighth avatar of Vishnu, charioteer of Arjuna and divine guide',
+                relationships: {
+                    father: 'Vasudeva',
+                    mother: 'Devaki',
+                    brother: 'Balarama',
+                    cousin: 'Arjuna'
+                },
+                keyVerses: ['6.23.1'],
+                themes: ['divine', 'guidance', 'dharma']
+            },
+            {
+                name: 'Duryodhana',
+                variations: ['Duryodhana', 'Duryodhan', 'Suyodhana', 'Suyodhan', 'Kaurava', 'Kaurav', 'Dhritarashtraputra', 'Dhṛtarāṣṭraputra'],
+                category: 'kauravas',
+                description: 'The eldest Kaurava and main antagonist, known for his jealousy and hatred',
+                relationships: {
+                    father: 'Dhritarashtra',
+                    mother: 'Gandhari',
+                    brothers: ['Dushasana', 'Duhshala']
+                },
+                keyVerses: ['1.1.100', '2.1.1'],
+                themes: ['jealousy', 'hatred', 'war']
+            },
+            {
+                name: 'Shakuni',
+                variations: ['Shakuni', 'Śakuni', 'Shakun', 'Śakun', 'Gandhararaja', 'Gandhārarāja', 'Maternal uncle'],
+                category: 'kauravas',
+                description: 'Maternal uncle of the Kauravas, master of dice and manipulator',
+                relationships: {
+                    sister: 'Gandhari',
+                    nephews: ['Duryodhana', 'Dushasana']
+                },
+                keyVerses: ['1.1.100', '2.1.1'],
+                themes: ['dice', 'manipulation', 'gambling']
+            },
+            {
+                name: 'Bhishma',
+                variations: ['Bhishma', 'Bhīṣma', 'Bhishm', 'Bhīṣm', 'Devavrata', 'Devavrata', 'Gangaputra', 'Gaṅgāputra', 'Pitamaha', 'Pitāmaha'],
+                category: 'warriors',
+                description: 'The grand uncle, known for his vow of celibacy and invincibility',
+                relationships: {
+                    father: 'Shantanu',
+                    mother: 'Ganga',
+                    nephews: ['Pandu', 'Dhritarashtra']
+                },
+                keyVerses: ['1.94.50', '6.114.1'],
+                themes: ['celibacy', 'loyalty', 'warfare']
+            },
+            {
+                name: 'Dronacharya',
+                variations: ['Dronacharya', 'Droṇācārya', 'Drona', 'Droṇa', 'Dron', 'Droṇ', 'Acharya', 'Ācārya', 'Guru'],
+                category: 'sages',
+                description: 'The royal guru who taught archery to both Pandavas and Kauravas',
+                relationships: {
+                    son: 'Ashwatthama',
+                    students: ['Arjuna', 'Duryodhana']
+                },
+                keyVerses: ['1.1.1', '6.23.1'],
+                themes: ['teaching', 'archery', 'loyalty']
+            },
+            {
+                name: 'Karna',
+                variations: ['Karna', 'Karṇa', 'Karn', 'Karṇ', 'Vasusena', 'Vasusena', 'Radheya', 'Rādheya', 'Suryaputra', 'Sūryaputra', 'Angaraja', 'Aṅgarāja'],
+                category: 'warriors',
+                description: 'The eldest Pandava, raised as a charioteer\'s son, known for his generosity',
+                relationships: {
+                    father: 'Surya',
+                    mother: 'Kunti',
+                    brothers: ['Yudhishthira', 'Bhima', 'Arjuna', 'Nakula', 'Sahadeva']
+                },
+                keyVerses: ['1.1.1', '2.1.1'],
+                themes: ['generosity', 'friendship', 'war']
+            },
+            {
+                name: 'Dhritarashtra',
+                variations: ['Dhritarashtra', 'Dhṛtarāṣṭra', 'Dhritarash', 'Dhṛtaraṣ', 'Blind King', 'Andha Raja', 'Andha Rāja'],
+                category: 'warriors',
+                description: 'Blind king of Hastinapura and father of the Kauravas',
+                relationships: {
+                    wife: 'Gandhari',
+                    sons: ['Duryodhana', 'Dushasana', 'Duhshala'],
+                    brother: 'Pandu'
+                },
+                keyVerses: ['1.1.100', '2.1.1'],
+                themes: ['blindness', 'partiality', 'kingship']
+            },
+            {
+                name: 'Gandhari',
+                variations: ['Gandhari', 'Gāndhārī', 'Gandhar', 'Gāndhār', 'Blind Queen', 'Andha Rani', 'Andha Rānī'],
+                category: 'women',
+                description: 'Mother of the Kauravas, who blindfolded herself to share her husband\'s blindness',
+                relationships: {
+                    husband: 'Dhritarashtra',
+                    sons: ['Duryodhana', 'Dushasana', 'Duhshala'],
+                    brother: 'Shakuni'
+                },
+                keyVerses: ['1.1.100', '2.1.1'],
+                themes: ['blindness', 'motherhood', 'sacrifice']
+            },
+            {
+                name: 'Kunti',
+                variations: ['Kunti', 'Kuntī', 'Kunt', 'Kunt', 'Pritha', 'Pṛthā', 'Panduputri', 'Pāṇḍuputrī', 'Vasudevaputri', 'Vāsudevaputrī'],
+                category: 'women',
+                description: 'Mother of the Pandavas, known for her devotion and the boon from gods',
+                relationships: {
+                    husband: 'Pandu',
+                    sons: ['Yudhishthira', 'Bhima', 'Arjuna', 'Karna']
+                },
+                keyVerses: ['1.109.1', '1.110.1'],
+                themes: ['motherhood', 'devotion', 'sacrifice']
+            },
+            // Secondary Characters
+            {
+                name: 'Janmejay',
+                variations: ['Janmejay', 'Janamejaya', 'Janamejaya', 'Janamejay', 'Parikshitputra', 'Parīkṣitputra'],
+                category: 'secondary',
+                description: 'King who heard the Mahabharata from Vaishampayana',
+                relationships: {
+                    father: 'Parikshit',
+                    grandfather: 'Abhimanyu'
+                },
+                keyVerses: ['1.1.1'],
+                themes: ['kingship', 'listening', 'sacrifice']
+            },
+            {
+                name: 'Vaishampayana',
+                variations: ['Vaishampayana', 'Vaiśampāyana', 'Vaishampayan', 'Vaiśampāyan', 'Vyasa Shishya', 'Vyāsa Śiṣya'],
+                category: 'sages',
+                description: 'Disciple of Vyasa who narrated the Mahabharata to Janmejay',
+                relationships: {
+                    guru: 'Vyasa',
+                    student: 'Janmejay'
+                },
+                keyVerses: ['1.1.1'],
+                themes: ['narration', 'teaching', 'wisdom']
+            },
+            {
+                name: 'Vyasa',
+                variations: ['Vyasa', 'Vyāsa', 'Vyas', 'Vyās', 'Krishna Dvaipayana', 'Kṛṣṇa Dvaipāyana', 'Vedavyasa', 'Vedavyāsa', 'Badarayana', 'Bādarāyaṇa'],
+                category: 'sages',
+                description: 'The sage who composed the Mahabharata, grandfather of both Pandavas and Kauravas',
+                relationships: {
+                    father: 'Parashara',
+                    mother: 'Satyavati',
+                    sons: ['Pandu', 'Dhritarashtra', 'Vidura']
+                },
+                keyVerses: ['1.1.1'],
+                themes: ['composition', 'wisdom', 'grandfather']
+            },
+            {
+                name: 'Sauti',
+                variations: ['Sauti', 'Sautī', 'Saut', 'Saut', 'Ugrashrava', 'Ugraśrava', 'Lomaharshana', 'Lomaharṣaṇa'],
+                category: 'sages',
+                description: 'The narrator who told the Mahabharata to the sages in Naimisha forest',
+                relationships: {
+                    father: 'Lomaharshana',
+                    audience: 'Sages in Naimisha'
+                },
+                keyVerses: ['1.1.1'],
+                themes: ['narration', 'storytelling', 'wisdom']
+            },
+            {
+                name: 'Shaunak',
+                variations: ['Shaunak', 'Śaunak', 'Shaunaka', 'Śaunaka', 'Shaun', 'Śaun', 'Rishi', 'Ṛṣi'],
+                category: 'sages',
+                description: 'The sage who asked Sauti to narrate the Mahabharata',
+                relationships: {
+                    student: 'Sauti'
+                },
+                keyVerses: ['1.1.1'],
+                themes: ['questioning', 'learning', 'wisdom']
+            }
+        ];
+    }
+
+    // Initialize Harivamsha data
+    initializeHarivamshaData() {
+        return [
+            {
+                id: 'hv.1.1.1',
+                parva: 'harivamsha',
+                adhyaya: 1,
+                verse: 1,
+                english: "Om! Having bowed down to Narayana and Nara, the most exalted male being, and also to the goddess Saraswati, must the word Jaya be uttered.",
+                hindi: "ॐ! नारायण और नर, सबसे उत्कृष्ट पुरुष, और देवी सरस्वती को नमन करके, जय शब्द का उच्चारण करना चाहिए।",
+                sanskrit: "ॐ नमो नारायणाय नराय च पुरुषोत्तमाय च सरस्वत्यै च जय उच्यते।",
+                roman: "Om namo nārāyaṇāya narāya ca puruṣottamāya ca sarasvatyai ca jaya ucyate.",
+                characters: ['Narayana', 'Nara', 'Saraswati'],
+                themes: ['invocation', 'divine', 'beginning'],
+                episode: 'harivamsha_invocation',
+                edition: 'bori',
+                sources: [
+                    { name: 'BORI Critical Edition - Harivamsha', page: 1, line: 1 },
+                    { name: 'Harivamsha Translation', volume: 1, page: 1 }
+                ]
+            }
+        ];
+    }
+
+    // Initialize comprehensive verse data (sample from BORI Critical Edition + Harivamsha)
     initializeVerseData() {
         return [
             {
@@ -60,24 +352,6 @@ class MahabharatScholar {
                 ]
             },
             {
-                id: '2.1.1',
-                parva: 'sabhaparva',
-                adhyaya: 1,
-                verse: 1,
-                english: "After the Pandavas had lived in the forest for twelve years, they came to the court of King Virata in disguise.",
-                hindi: "पांडवों के बारह वर्ष तक वन में रहने के बाद, वे छद्मवेश में राजा विराट के दरबार में आए।",
-                sanskrit: "द्वादशवर्षाणि वने वसतां पाण्डवानां ततो विराटनगरे प्रविष्टानां।",
-                roman: "Dvādaśavarṣāṇi vane vasatāṃ pāṇḍavānāṃ tato virāṭanagare praviṣṭānāṃ.",
-                characters: ['Pandavas', 'Virata'],
-                themes: ['exile', 'disguise', 'return'],
-                episode: 'virata_parva',
-                edition: 'bori',
-                sources: [
-                    { name: 'BORI Critical Edition', page: 45, line: 1 },
-                    { name: 'Ganguli Translation', volume: 4, page: 1 }
-                ]
-            },
-            {
                 id: '6.23.1',
                 parva: 'bheeshma',
                 adhyaya: 23,
@@ -94,75 +368,8 @@ class MahabharatScholar {
                     { name: 'BORI Critical Edition', page: 123, line: 1 },
                     { name: 'Ganguli Translation', volume: 6, page: 23 }
                 ]
-            },
-            {
-                id: '6.23.2',
-                parva: 'bheeshma',
-                adhyaya: 23,
-                verse: 2,
-                english: "My limbs fail and my mouth is parched, my body quivers and my hair stands on end.",
-                hindi: "मेरे अंग कमजोर हो रहे हैं और मेरा मुँह सूख रहा है, मेरा शरीर काँप रहा है और मेरे बाल खड़े हो रहे हैं।",
-                sanskrit: "सीदन्ति मम गात्राणि मुखं च परिशुष्यति। वेपथुश्च शरीरे मे रोमहर्षश्च जायते॥",
-                roman: "Sīdanti mama gātrāṇi mukhaṃ ca pariśuṣyati। Vepathuśca śarīre me romaharṣaśca jāyate॥",
-                characters: ['Arjuna'],
-                themes: ['fear', 'anxiety', 'physical_reaction'],
-                episode: 'bhagavad_gita',
-                edition: 'bori',
-                sources: [
-                    { name: 'BORI Critical Edition', page: 123, line: 2 },
-                    { name: 'Ganguli Translation', volume: 6, page: 23 }
-                ]
             }
-        ];
-    }
-
-    // Initialize character data
-    initializeCharacters() {
-        return [
-            {
-                name: 'Yudhishthira',
-                aliases: ['Dharmaraja', 'Ajatashatru'],
-                description: 'The eldest Pandava, known for his righteousness and truthfulness',
-                category: 'pandavas',
-                relationships: {
-                    father: 'Pandu',
-                    mother: 'Kunti',
-                    brothers: ['Bhima', 'Arjuna', 'Nakula', 'Sahadeva'],
-                    wife: 'Draupadi'
-                },
-                keyVerses: ['1.1.1', '2.1.1'],
-                themes: ['dharma', 'righteousness', 'truth']
-            },
-            {
-                name: 'Arjuna',
-                aliases: ['Partha', 'Kiriti', 'Gudakesha'],
-                description: 'The third Pandava, greatest archer and hero of the Bhagavad Gita',
-                category: 'pandavas',
-                relationships: {
-                    father: 'Pandu',
-                    mother: 'Kunti',
-                    brothers: ['Yudhishthira', 'Bhima', 'Nakula', 'Sahadeva'],
-                    wife: 'Draupadi',
-                    son: 'Abhimanyu'
-                },
-                keyVerses: ['6.23.1', '6.23.2'],
-                themes: ['war', 'dilemma', 'devotion']
-            },
-            {
-                name: 'Krishna',
-                aliases: ['Vasudeva', 'Govinda', 'Madhava'],
-                description: 'The eighth avatar of Vishnu, charioteer of Arjuna and divine guide',
-                category: 'gods',
-                relationships: {
-                    father: 'Vasudeva',
-                    mother: 'Devaki',
-                    brother: 'Balarama',
-                    cousin: 'Arjuna'
-                },
-                keyVerses: ['6.23.1'],
-                themes: ['divine', 'guidance', 'dharma']
-            }
-        ];
+        ].concat(this.harivamshaData);
     }
 
     // Initialize episode data
@@ -179,15 +386,15 @@ class MahabharatScholar {
                 name: 'Bhagavad Gita',
                 description: 'The divine discourse between Krishna and Arjuna on the battlefield',
                 parva: 'bheeshma',
-                keyVerses: ['6.23.1', '6.23.2'],
+                keyVerses: ['6.23.1'],
                 themes: ['dharma', 'duty', 'philosophy', 'war']
             },
             {
-                name: 'Virata Parva',
-                description: 'The year of living in disguise at King Virata\'s court',
-                parva: 'virataparva',
-                keyVerses: ['2.1.1'],
-                themes: ['exile', 'disguise', 'return']
+                name: 'Harivamsha Invocation',
+                description: 'The opening verses of the Harivamsha',
+                parva: 'harivamsha',
+                keyVerses: ['hv.1.1.1'],
+                themes: ['divine', 'beginning', 'harivamsha']
             }
         ];
     }
@@ -205,16 +412,16 @@ class MahabharatScholar {
             {
                 name: 'War',
                 description: 'The great war of Kurukshetra',
-                keyVerses: ['6.23.1', '6.23.2'],
-                characters: ['Arjuna', 'Krishna'],
+                keyVerses: ['6.23.1'],
+                characters: ['Arjuna', 'Krishna', 'Duryodhana'],
                 episodes: ['Bhagavad Gita']
             },
             {
-                name: 'Exile',
-                description: 'The thirteen years of exile in the forest',
-                keyVerses: ['2.1.1'],
-                characters: ['Pandavas'],
-                episodes: ['Virata Parva']
+                name: 'Divine',
+                description: 'Divine intervention and guidance',
+                keyVerses: ['1.1.1', 'hv.1.1.1'],
+                characters: ['Krishna', 'Narayana', 'Saraswati'],
+                episodes: ['Invocation', 'Harivamsha Invocation']
             }
         ];
     }
@@ -259,7 +466,7 @@ class MahabharatScholar {
         });
     }
 
-    // Handle search input
+    // Handle search input with character variations
     handleSearch(e) {
         const query = e.target.value.toLowerCase();
         const clearBtn = document.getElementById('clearSearch');
@@ -273,7 +480,7 @@ class MahabharatScholar {
         }
     }
 
-    // Perform search based on current search type
+    // Perform search with character variation support
     performSearch(query) {
         let results = [];
         
@@ -297,25 +504,40 @@ class MahabharatScholar {
         this.addToRecentSearches(query);
     }
 
-    // Search verses
+    // Search verses with character variation support
     searchVerses(query) {
-        return this.verseData.filter(verse => 
-            verse.english.toLowerCase().includes(query) ||
-            verse.hindi.includes(query) ||
-            verse.sanskrit.includes(query) ||
-            verse.roman.toLowerCase().includes(query) ||
-            verse.characters.some(char => char.toLowerCase().includes(query)) ||
-            verse.themes.some(theme => theme.toLowerCase().includes(query))
-        );
+        return this.verseData.filter(verse => {
+            // Check if query matches any character variation
+            const characterMatch = verse.characters.some(char => {
+                const character = this.characters.find(c => c.name === char);
+                if (character) {
+                    return character.variations.some(variation => 
+                        variation.toLowerCase().includes(query)
+                    );
+                }
+                return char.toLowerCase().includes(query);
+            });
+
+            return verse.english.toLowerCase().includes(query) ||
+                   verse.hindi.includes(query) ||
+                   verse.sanskrit.includes(query) ||
+                   verse.roman.toLowerCase().includes(query) ||
+                   characterMatch ||
+                   verse.themes.some(theme => theme.toLowerCase().includes(query));
+        });
     }
 
-    // Search characters
+    // Search characters with variation support
     searchCharacters(query) {
-        return this.characters.filter(char => 
-            char.name.toLowerCase().includes(query) ||
-            char.aliases.some(alias => alias.toLowerCase().includes(query)) ||
-            char.description.toLowerCase().includes(query)
-        );
+        return this.characters.filter(char => {
+            const nameMatch = char.name.toLowerCase().includes(query);
+            const variationMatch = char.variations.some(variation => 
+                variation.toLowerCase().includes(query)
+            );
+            const descriptionMatch = char.description.toLowerCase().includes(query);
+            
+            return nameMatch || variationMatch || descriptionMatch;
+        });
     }
 
     // Search episodes
@@ -408,7 +630,7 @@ class MahabharatScholar {
         `;
     }
 
-    // Create character card
+    // Create character card with variations
     createCharacterCard(character) {
         return `
             <div class="verse-card">
@@ -417,7 +639,7 @@ class MahabharatScholar {
                 </div>
                 <div class="verse-content">
                     <div class="verse-text">
-                        <strong>Aliases:</strong> ${character.aliases.join(', ')}
+                        <strong>Variations:</strong> ${character.variations.slice(0, 5).join(', ')}${character.variations.length > 5 ? '...' : ''}
                     </div>
                     <div class="verse-translation">
                         ${character.description}
@@ -486,7 +708,7 @@ class MahabharatScholar {
         }
     }
 
-    // Get parva name
+    // Get parva name including Harivamsha
     getParvaName(parva) {
         const parvaNames = {
             'adiparva': 'Adi Parva',
@@ -506,7 +728,8 @@ class MahabharatScholar {
             'ashramavasika': 'Ashramavasika Parva',
             'mausala': 'Mausala Parva',
             'mahaprasthanika': 'Mahaprasthanika Parva',
-            'svargarohana': 'Svargarohana Parva'
+            'svargarohana': 'Svargarohana Parva',
+            'harivamsha': 'Harivamsha'
         };
         return parvaNames[parva] || parva;
     }
@@ -690,11 +913,13 @@ class MahabharatScholar {
         ).join('');
     }
 
-    // Populate character filter
+    // Populate character filter with variations
     populateCharacterFilter() {
         const select = document.getElementById('characterFilter');
         select.innerHTML = '<option value="">All Characters</option>' +
-            this.characters.map(char => `<option value="${char.name}">${char.name}</option>`).join('');
+            this.characters.map(char => 
+                `<option value="${char.name}">${char.name} (${char.variations.slice(0, 3).join(', ')})</option>`
+            ).join('');
     }
 
     // Display welcome message
@@ -702,9 +927,10 @@ class MahabharatScholar {
         const container = document.getElementById('resultsContainer');
         container.innerHTML = `
             <div class="welcome-message">
-                <h3>Welcome to Mahabharat Scholar</h3>
+                <h3>Welcome to Critically Māhābhārat</h3>
                 <p>Search for verses, characters, episodes, or themes from the great Indian epic.</p>
-                <p>This app is based on the BORI Critical Edition and includes authentic translations in English, Hindi, and Sanskrit.</p>
+                <p>This app includes the BORI Critical Edition of Mahabharata and Harivamsha with authentic translations in English, Hindi, and Sanskrit.</p>
+                <p><strong>Character Search:</strong> Try searching for "Bheem", "Krishn", "Shaunak", or any character variation!</p>
             </div>
         `;
     }
@@ -721,4 +947,4 @@ class MahabharatScholar {
 }
 
 // Initialize the app
-const app = new MahabharatScholar();
+const app = new CriticallyMahabharat();
