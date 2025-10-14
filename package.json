@@ -1,0 +1,30 @@
+{
+  "name": "mahabharat-scholar",
+  "version": "1.0.0",
+  "description": "A comprehensive web application for scholarly study of the Mahabharata epic",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000 --open=/index.html",
+    "start": "live-server --port=3000 --open=/index.html",
+    "build": "echo 'No build process needed for static site'",
+    "serve": "live-server --port=8080 --open=/index.html"
+  },
+  "keywords": [
+    "mahabharata",
+    "scholarly",
+    "epic",
+    "sanskrit",
+    "hindi",
+    "translation",
+    "bori",
+    "critical-edition"
+  ],
+  "author": "Mahabharat Scholar Team",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "d3": "^7.8.5"
+  }
+}
