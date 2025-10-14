@@ -232,8 +232,11 @@ class EditionComparisonTool {
         }
     }
 
-    loadVerseComparison() {
-        const verseRef = document.getElementById('verseReference').value.trim();
+    loadVerseComparison(verseRef = null) {
+        if (!verseRef) {
+            verseRef = document.getElementById('verseReference').value.trim();
+        }
+        
         if (!verseRef) {
             alert('Please enter a verse reference');
             return;

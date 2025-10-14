@@ -432,11 +432,19 @@ class CriticallyMahabharat {
     // Setup event listeners
     setupEventListeners() {
         // Search functionality
-        document.getElementById('searchInput').addEventListener('input', (e) => this.handleSearch(e));
-        document.getElementById('searchInput').addEventListener('keydown', (e) => this.handleSearchKeydown(e));
-        document.getElementById('searchInput').addEventListener('focus', () => this.handleSearchFocus());
-        document.getElementById('searchInput').addEventListener('blur', () => this.handleSearchBlur());
-        document.getElementById('clearSearch').addEventListener('click', () => this.clearSearch());
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearSearch');
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => this.handleSearch(e));
+            searchInput.addEventListener('keydown', (e) => this.handleSearchKeydown(e));
+            searchInput.addEventListener('focus', () => this.handleSearchFocus());
+            searchInput.addEventListener('blur', () => this.handleSearchBlur());
+        }
+        
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => this.clearSearch());
+        }
         
         // Search type selection
         document.querySelectorAll('input[name="searchType"]').forEach(radio => {
@@ -444,19 +452,35 @@ class CriticallyMahabharat {
         });
         
         // Advanced search
-        document.getElementById('advancedSearchToggle').addEventListener('click', () => this.toggleAdvancedSearch());
-        document.getElementById('applyFilters').addEventListener('click', () => this.applyFilters());
-        document.getElementById('clearFilters').addEventListener('click', () => this.clearFilters());
+        const advancedToggle = document.getElementById('advancedSearchToggle');
+        const applyFilters = document.getElementById('applyFilters');
+        const clearFilters = document.getElementById('clearFilters');
+        
+        if (advancedToggle) {
+            advancedToggle.addEventListener('click', () => this.toggleAdvancedSearch());
+        }
+        if (applyFilters) {
+            applyFilters.addEventListener('click', () => this.applyFilters());
+        }
+        if (clearFilters) {
+            clearFilters.addEventListener('click', () => this.clearFilters());
+        }
         
         // Language toggle
-        document.getElementById('languageToggle').addEventListener('click', () => this.toggleLanguage());
+        const languageToggle = document.getElementById('languageToggle');
+        if (languageToggle) {
+            languageToggle.addEventListener('click', () => this.toggleLanguage());
+        }
         
         // Help modal
-        document.getElementById('helpBtn').addEventListener('click', () => this.showHelp());
-        document.getElementById('closeHelpModal').addEventListener('click', () => this.hideHelp());
+        const helpBtn = document.getElementById('helpBtn');
+        const closeHelpModal = document.getElementById('closeHelpModal');
+        if (helpBtn) helpBtn.addEventListener('click', () => this.showHelp());
+        if (closeHelpModal) closeHelpModal.addEventListener('click', () => this.hideHelp());
         
         // Modal close
-        document.getElementById('closeModal').addEventListener('click', () => this.hideVerseModal());
+        const closeModal = document.getElementById('closeModal');
+        if (closeModal) closeModal.addEventListener('click', () => this.hideVerseModal());
         
         // View toggle
         document.querySelectorAll('.view-btn').forEach(btn => {
@@ -464,7 +488,8 @@ class CriticallyMahabharat {
         });
         
         // Sort functionality
-        document.getElementById('sortBy').addEventListener('change', (e) => this.sortResults(e.target.value));
+        const sortBy = document.getElementById('sortBy');
+        if (sortBy) sortBy.addEventListener('change', (e) => this.sortResults(e.target.value));
         
         // Navigation links
         document.querySelectorAll('.nav-link').forEach(link => {
@@ -1301,5 +1326,7 @@ class CriticallyMahabharat {
     }
 }
 
-// Initialize the app
-const app = new CriticallyMahabharat();
+// Initialize the app when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    window.app = new CriticallyMahabharat();
+});
