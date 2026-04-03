@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Four Narrative Layers of the Mahābhārata</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav" aria-label="Section navigation">
+    <a href="#diagram" class="nav-dot" data-label="Structure" aria-label="Go to Structure section"></a>
+    <a href="#story-begins" class="nav-dot" data-label="Story Begins" aria-label="Go to Story Begins section"></a>
+    <a href="#boundaries" class="nav-dot" data-label="Boundaries" aria-label="Go to Boundaries section"></a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="hero__inner">
+      <p class="hero__eyebrow">A Scholarly Framework · Anupriy Kanti</p>
+      <h1 class="hero__title">
+        The Four Narrative Layers<br>
+        <span class="hero__title-sub">of the Mahābhārata</span>
+      </h1>
+      <p class="hero__subtitle">
+        The Critical Edition of the Mahabharata is not a single storytelling voice.
+        It is four nested frames of transmission — each narrator recounting what a
+        previous narrator said — layered across generations of oral tradition.
+      </p>
+      <div class="hero__meta">
+        <span>Based on the BORI Critical Edition</span>
+        <span class="hero__meta-sep">·</span>
+        <span>Bibek Debroy's English translation</span>
+      </div>
+      <a href="#diagram" class="hero__cta">Explore the Structure ↓</a>
+    </div>
+    <div class="hero__scroll-hint" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
+    </div>
+  </header>
+
+  <!-- SECTION 2: INTERACTIVE DIAGRAM -->
+  <section id="diagram" class="section diagram-section">
+    <div class="section__header">
+      <h2 class="section__title">The Nested Frame Structure</h2>
+      <p class="section__lead">
+        Each layer is a narrator–audience pair. The outermost layer (L4) contains all
+        the others. Hover or click any layer to explore its narrator, audience, and context.
+      </p>
+    </div>
+
+    <div class="diagram-layout">
+      <div class="diagram-container">
+        <svg id="layers-svg"
+          role="img"
+          aria-label="Interactive diagram of the four narrative layers of the Mahabharata"
+          xmlns="http://www.w3.org/2000/svg">
+          <title>Four Narrative Layers of the Mahabharata — Critical Edition</title>
+          <desc>
+            Concentric nested rectangles showing L4 (outermost, Final Author), L3 (Sauti/Shaunak),
+            L2 (Vaishampayan/Janamejay), L1 (Vyas/Sanjay), and the Core story of the Kuru Clan.
+          </desc>
+        </svg>
+      </div>
+
+      <div id="layer-detail" class="layer-detail" aria-live="polite" aria-atomic="true">
+        <div class="layer-detail__placeholder">
+          <p>← Hover or click a layer</p>
+        </div>
+        <div class="layer-detail__content" hidden>
+          <div class="layer-detail__badge" id="detail-badge"></div>
+          <h3 class="layer-detail__narrator" id="detail-narrator"></h3>
+          <p class="layer-detail__context" id="detail-context"></p>
+          <div class="layer-detail__divider"></div>
+          <p class="layer-detail__description" id="detail-description"></p>
+          <div class="layer-detail__meta">
+            <span class="layer-detail__textname-label">Text called:</span>
+            <span class="layer-detail__textname" id="detail-textname"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: HOW THE STORY BEGINS (SCROLLYTELLING) -->
+  <section id="story-begins" class="section scrolly-section">
+    <div class="section__header">
+      <h2 class="section__title">How the Story Begins</h2>
+      <p class="section__lead">
+        The Mahabharata opens from the outside in. Before a single event of the Kuru
+        war is described, the Epic establishes who is speaking, to whom, where, and why.
+        Scroll to see each layer introduced.
+      </p>
+    </div>
+
+    <div class="scrolly-layout">
+      <div class="scrolly-sticky" aria-hidden="true">
+        <svg id="scrolly-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+        <p class="scrolly-sticky__caption" id="scrolly-caption">Scroll to begin</p>
+      </div>
+
+      <div class="scrolly-steps" id="scrolly-steps">
+        <!-- Injected by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: THE FOUR BOUNDARIES -->
+  <section id="boundaries" class="section boundaries-section">
+    <div class="section__header">
+      <h2 class="section__title">The Four Boundaries</h2>
+      <p class="section__lead">
+        The Critical Edition spans two works — the Mahābhārata and the Harivamsha —
+        defined by four textual boundaries. B2 and B3 mark the seam between the two.
+      </p>
+    </div>
+
+    <div class="boundaries-wrapper">
+      <div class="boundaries-timeline" id="boundaries-timeline">
+        <!-- Injected by app.js -->
+      </div>
+      <div class="boundaries-labels">
+        <span class="boundaries-work-label boundaries-work-label--mhb">Mahābhārata CE · 18 books, 95 sections</span>
+        <span class="boundaries-work-label boundaries-work-label--hvm">Harivamsha CE · 1 book, 3 sections</span>
+      </div>
+    </div>
+
+    <div class="boundaries-note">
+      <p>
+        The Harivamsha is the <em>khilā</em> (appendix) of the Mahabharata in the Critical Edition —
+        not classified as a separate 19th book, but listed within the same table of contents.
+        The relationship between B2 and B3 — an ending and a beginning — is explored in the essay
+        <em>"4 Boundaries of the Mahābhārat"</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__credit">
+        Framework by <strong>Anupriy Kanti</strong> · Essay: <em>"4 Boundaries of the Mahābhārat"</em>
+      </p>
+      <p class="site-footer__source">
+        Primary source: Bibek Debroy's translation of the BORI Critical Edition (Penguin, 2010–2014)
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
