@@ -1,280 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Critically Māhābhārat - Critical Edition Reference</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/transliteration@2.3.5/dist/browser/bundle.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Four Narrative Layers of the Mahābhārata</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <i class="fas fa-scroll"></i>
-                    <h1>Critically Māhābhārat</h1>
-                    <span class="edition-badge">BORI Critical Edition + Harivamsha</span>
-                </div>
-                <div class="header-actions">
-                    <button class="language-toggle" id="languageToggle">
-                        <i class="fas fa-language"></i>
-                        <span>English</span>
-                    </button>
-                    <button class="help-btn" id="helpBtn">
-                        <i class="fas fa-question-circle"></i>
-                    </button>
-                </div>
-            </div>
-        </header>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Search Section -->
-            <section class="search-section">
-                <div class="search-container">
-                    <div class="search-input-group">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="searchInput" placeholder="Search verses, characters, episodes, or themes..." class="search-input" autocomplete="off">
-                        <button id="clearSearch" class="clear-btn" style="display: none;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        <div class="search-dropdown" id="searchDropdown" style="display: none;">
-                            <div class="dropdown-content" id="dropdownContent">
-                                <!-- Auto-complete suggestions will be loaded here -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="search-options">
-                        <div class="search-type-selector">
-                            <label class="search-type-label">
-                                <input type="radio" name="searchType" value="verse" checked>
-                                <span>Verses</span>
-                            </label>
-                            <label class="search-type-label">
-                                <input type="radio" name="searchType" value="character">
-                                <span>Characters</span>
-                            </label>
-                            <label class="search-type-label">
-                                <input type="radio" name="searchType" value="episode">
-                                <span>Episodes</span>
-                            </label>
-                            <label class="search-type-label">
-                                <input type="radio" name="searchType" value="theme">
-                                <span>Themes</span>
-                            </label>
-                        </div>
-                        <div class="advanced-search-toggle">
-                            <button id="advancedSearchToggle" class="btn-secondary">
-                                <i class="fas fa-cog"></i>
-                                Advanced Search
-                            </button>
-                        </div>
-                    </div>
-                </div>
+  <!-- FIXED BACKGROUND DIAGRAM -->
+  <div id="bg-diagram" aria-hidden="true">
+    <svg id="bg-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
 
-                <!-- Advanced Search Panel -->
-                <div class="advanced-search-panel" id="advancedSearchPanel" style="display: none;">
-                    <div class="advanced-search-content">
-                        <div class="search-filters">
-                            <div class="filter-group">
-                                <label>Parva (Book):</label>
-                                <select id="parvaFilter">
-                                    <option value="">All Parvas</option>
-                                    <option value="adiparva">Adi Parva</option>
-                                    <option value="sabhaparva">Sabha Parva</option>
-                                    <option value="vanaparva">Vana Parva</option>
-                                    <option value="virataparva">Virata Parva</option>
-                                    <option value="udyogaparva">Udyoga Parva</option>
-                                    <option value="bheeshma">Bheeshma Parva</option>
-                                    <option value="drona">Drona Parva</option>
-                                    <option value="karna">Karna Parva</option>
-                                    <option value="shalya">Shalya Parva</option>
-                                    <option value="sauptika">Sauptika Parva</option>
-                                    <option value="stri">Stri Parva</option>
-                                    <option value="shanti">Shanti Parva</option>
-                                    <option value="anushasana">Anushasana Parva</option>
-                                    <option value="ashvamedhika">Ashvamedhika Parva</option>
-                                    <option value="ashramavasika">Ashramavasika Parva</option>
-                                    <option value="mausala">Mausala Parva</option>
-                                    <option value="mahaprasthanika">Mahaprasthanika Parva</option>
-                                    <option value="svargarohana">Svargarohana Parva</option>
-                                </select>
-                            </div>
-                            <div class="filter-group">
-                                <label>Character:</label>
-                                <select id="characterFilter">
-                                    <option value="">All Characters</option>
-                                </select>
-                            </div>
-                            <div class="filter-group">
-                                <label>Edition:</label>
-                                <select id="editionFilter">
-                                    <option value="bori">BORI Critical Edition</option>
-                                    <option value="vulgate">Vulgate Edition</option>
-                                    <option value="bengali">Bengali Edition</option>
-                                    <option value="southern">Southern Recension</option>
-                                </select>
-                            </div>
-                            <div class="filter-group">
-                                <label>Verse Range:</label>
-                                <input type="number" id="startVerse" placeholder="Start" min="1">
-                                <span>to</span>
-                                <input type="number" id="endVerse" placeholder="End" min="1">
-                            </div>
-                        </div>
-                        <div class="search-actions">
-                            <button id="applyFilters" class="btn-primary">Apply Filters</button>
-                            <button id="clearFilters" class="btn-secondary">Clear All</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+  <!-- NAV -->
+  <nav class="site-nav" aria-label="Section navigation">
+    <a href="#story-begins" class="nav-dot" data-label="Story Begins" aria-label="Go to Story Begins section"></a>
+    <a href="#framework" class="nav-dot" data-label="Framework" aria-label="Go to Framework section"></a>
+  </nav>
 
-            <!-- Results Section -->
-            <section class="results-section">
-                <div class="results-header">
-                    <div class="results-info">
-                        <h2 id="resultsTitle">Search Results</h2>
-                        <span class="results-count" id="resultsCount">0 results</span>
-                    </div>
-                    <div class="results-controls">
-                        <div class="view-toggle">
-                            <button class="view-btn active" data-view="list">
-                                <i class="fas fa-list"></i>
-                            </button>
-                            <button class="view-btn" data-view="grid">
-                                <i class="fas fa-th"></i>
-                            </button>
-                        </div>
-                        <div class="sort-controls">
-                            <select id="sortBy">
-                                <option value="relevance">Relevance</option>
-                                <option value="parva">Parva</option>
-                                <option value="verse">Verse Number</option>
-                                <option value="character">Character</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="hero__top">
+      <p class="hero__eyebrow">A Scholarly Framework · Anupriy Kanti</p>
+      <h1 class="hero__title">
+        The Four Narrative Layers<br>
+        <span class="hero__title-sub">of the Mahābhārata</span>
+      </h1>
+    </div>
+    <div class="hero__center">
+      <p class="hero__subtitle">
+        The Critical Edition of the Mahābhārata is not a single storytelling voice.
+        It is four nested frames of transmission — each narrator recounting what a
+        previous narrator said — layered across generations of oral tradition.
+      </p>
+    </div>
+    <div class="hero__bottom">
+      <div class="hero__meta">
+        <span>Based on the BORI Critical Edition</span>
+        <span class="hero__meta-sep">·</span>
+        <span>Bibek Debroy's English translation</span>
+      </div>
+      <a href="#story-begins" class="hero__cta">Experience How the Story Begins ↓</a>
+    </div>
+    <div class="hero__scroll-hint" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
+    </div>
+  </header>
 
-                <div class="results-container" id="resultsContainer">
-                    <!-- Results will be dynamically loaded here -->
-                </div>
-
-                <div class="no-results" id="noResults" style="display: none;">
-                    <i class="fas fa-search"></i>
-                    <h3>No results found</h3>
-                    <p>Try adjusting your search criteria or filters</p>
-                </div>
-            </section>
-        </main>
-
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-content">
-                <div class="sidebar-section">
-                    <h3>Quick Navigation</h3>
-                    <div class="nav-links">
-                        <a href="#" class="nav-link" data-section="characters">
-                            <i class="fas fa-users"></i>
-                            Characters
-                        </a>
-                        <a href="#" class="nav-link" data-section="episodes">
-                            <i class="fas fa-book-open"></i>
-                            Episodes
-                        </a>
-                        <a href="#" class="nav-link" data-section="themes">
-                            <i class="fas fa-lightbulb"></i>
-                            Themes
-                        </a>
-                        <a href="family-trees.html" class="nav-link" data-section="family-trees">
-                            <i class="fas fa-sitemap"></i>
-                            Family Trees
-                        </a>
-                        <a href="edition-comparison.html" class="nav-link" data-section="edition-comparison">
-                            <i class="fas fa-balance-scale"></i>
-                            Edition Comparison
-                        </a>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <h3>Recent Searches</h3>
-                    <div class="recent-searches" id="recentSearches">
-                        <!-- Recent searches will be loaded here -->
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <h3>Scholarly Notes</h3>
-                    <div class="scholarly-notes">
-                        <p>This app is based on the BORI Critical Edition of the Mahabharata, considered the most authoritative scholarly version.</p>
-                        <p>All translations are fact-checked against multiple sources and peer-reviewed scholarship.</p>
-                    </div>
-                </div>
-            </div>
-        </aside>
+  <!-- SECTION 1: HOW THE STORY BEGINS -->
+  <section id="story-begins" class="section nested-viewer-section">
+    <div class="section__header">
+      <h2 class="section__title">How the Story Begins</h2>
+      <p class="section__lead">
+        The Mahābhārata opens from the outside in. Before a single event of the Kuru
+        war is described, each narrative layer is introduced — frame by frame.
+      </p>
+      <a href="#nested-viewer" class="section-cta">Witness the Layers ↓</a>
     </div>
 
-    <!-- Verse Detail Modal -->
-    <div class="modal" id="verseModal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Verse Details</h3>
-                <button class="close-btn" id="closeModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Verse details will be loaded here -->
-            </div>
+    <div class="nested-viewer" id="nested-viewer">
+      <div class="nested-viewer__sticky">
+        <div class="nested-viewer__progress" id="viewer-progress"></div>
+
+        <div class="viewer-meta" id="viewer-meta">
+          <!-- Populated by app.js: badge, narrator row, context -->
         </div>
-    </div>
 
-    <!-- Help Modal -->
-    <div class="modal" id="helpModal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Help & Guide</h3>
-                <button class="close-btn" id="closeHelpModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="help-content">
-                    <h4>How to Use This App</h4>
-                    <ul>
-                        <li><strong>Search Verses:</strong> Enter any word, phrase, or concept to find relevant verses</li>
-                        <li><strong>Character Search:</strong> Search for specific characters to find all related verses</li>
-                        <li><strong>Episode Search:</strong> Find verses related to specific episodes or events</li>
-                        <li><strong>Theme Search:</strong> Explore verses by thematic content (dharma, karma, etc.)</li>
-                        <li><strong>Advanced Search:</strong> Use filters to narrow down results by parva, character, or verse range</li>
-                    </ul>
-                    
-                    <h4>Language Support</h4>
-                    <ul>
-                        <li><strong>English:</strong> Modern scholarly translations</li>
-                        <li><strong>Hindi:</strong> Devanagari script with Roman transliteration</li>
-                        <li><strong>Sanskrit:</strong> Original text in Devanagari with Roman transliteration</li>
-                    </ul>
-                    
-                    <h4>Scholarly Sources</h4>
-                    <p>All content is based on:</p>
-                    <ul>
-                        <li>BORI Critical Edition (Primary)</li>
-                        <li>Ganguli's Translation (Reference)</li>
-                        <li>Van Buitenen's Translation (Reference)</li>
-                        <li>Multiple regional recensions for comparison</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="nested-viewer__frames" id="viewer-frames">
+          <!-- Populated by app.js -->
         </div>
-    </div>
 
-    <script src="script.js"></script>
+        <div class="viewer-sentence-wrap">
+          <p class="viewer-sentence" id="viewer-sentence">Scroll to begin</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: MY FRAMEWORK -->
+  <section id="framework" class="section framework-section">
+    <div class="framework-scroll" id="framework-scroll">
+      <div class="framework-scroll__sticky">
+        <div class="framework-diagram-container">
+
+          <div class="framework-title-overlay">
+            <p class="framework-eyebrow">My Framework</p>
+            <h2 class="framework-diagram-title">The Four Narrative Layers</h2>
+          </div>
+
+          <svg id="layers-svg"
+            role="img"
+            aria-label="The Four Narrative Layers of the Mahabharata"
+            xmlns="http://www.w3.org/2000/svg">
+            <title>Four Narrative Layers of the Mahabharata — Critical Edition</title>
+            <desc>Concentric nested rectangles showing L4 (outermost, Final Author), L3 (Sauti/Shaunak), L2 (Vaishampayan/Janamejay), L1 (Vyās/Sanjay), and the Core story of the Kuru Clan.</desc>
+          </svg>
+
+          <div class="framework-body-overlay" id="framework-body">
+            <p>Each authorial voice we just met belongs to one of these four nested frames of transmission.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__credit">
+        Framework by <strong>Anupriy Kanti</strong> ·
+        <a href="boundaries.html" class="site-footer__essay-link">Essay: <em>"4 Boundaries of the Mahābhārat"</em></a>
+      </p>
+      <p class="site-footer__source">
+        Primary source: Bibek Debroy's translation of the BORI Critical Edition (Penguin, 2010–2014)
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
